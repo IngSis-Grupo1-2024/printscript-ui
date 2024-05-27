@@ -7,6 +7,7 @@ import {Drawer} from "@mui/material";
 import {useGetSnippets} from "../utils/queries.tsx";
 import {usePaginationContext} from "../contexts/paginationContext.tsx";
 import useDebounce from "../hooks/useDebounce.ts";
+import {useAuth0} from "@auth0/auth0-react";
 
 const HomeScreen = () => {
   const {id: paramsId} = useParams<{ id: string }>();
@@ -30,6 +31,8 @@ const HomeScreen = () => {
   }, [paramsId]);
 
   const handleCloseModal = () => setSnippetId(null)
+  const {isAuthenticated} = useAuth0();
+
 
   // DeBounce Function
   useDebounce(() => {
@@ -43,7 +46,7 @@ const HomeScreen = () => {
     setSearchTerm(snippetName);
   };
 
-  return (
+  return ( isAuthenticated &&
       <>
         <SnippetTable loading={isLoading} handleClickSnippet={setSnippetId} snippets={data?.snippets}
                       handleSearchSnippet={handleSearchSnippet}/>
