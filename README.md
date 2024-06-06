@@ -63,6 +63,6 @@ npm run cypress
 
 - [X] Integrate Auth0 UI and private routes
 - [ ] Integrate your endpoints to the UI
-- [X] Dockerize
+- [ ] Dockerize
 - [ ] CI/CD
 - [ ] Sockets*
