@@ -47,6 +47,7 @@ const FormattingRulesList = () => {
     setRules(newRules)
   }
 
+
   return (
     <Card style={{padding: 16, margin: 16}}>
       <Typography variant={"h6"}>Formatting rules</Typography>
@@ -66,7 +67,7 @@ const FormattingRulesList = () => {
                 disableRipple
                 onChange={toggleRule(rule)}
               />
-              <ListItemText primary={rule.name} />
+              <ListItemText primary={rule.name.toLowerCase()} />
               {typeof rule.value === 'number' ?
                 (<TextField
                   type="number"
