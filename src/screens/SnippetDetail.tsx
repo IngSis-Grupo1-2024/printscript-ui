@@ -51,7 +51,7 @@ const DownloadButton = ({snippet}: { snippet?: Snippet }) => {
 export const SnippetDetail = (props: SnippetDetailProps) => {
   const {id, handleCloseModal} = props;
   const [code, setCode] = useState(
-      ""
+      "h"
   );
   const [shareModalOppened, setShareModalOppened] = useState(false)
   const [deleteConfirmationModalOpen, setDeleteConfirmationModalOpen] = useState(false)
@@ -65,7 +65,9 @@ export const SnippetDetail = (props: SnippetDetailProps) => {
 
   useEffect(() => {
     if (snippet) {
+      console.log(snippet)
       setCode(snippet.content);
+      console.log(snippet.content);
     }
   }, [snippet]);
 

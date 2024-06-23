@@ -25,9 +25,9 @@ export class RemoteSnippetOperations extends FakeSnippetOperations {
         return axiosInstance.delete(`${MANAGER_URL}/${id}`)
     }
 
-    override getSnippetById(id: string): Promise<Snippet | undefined> {
-        super.getSnippetById(id)
-        return axiosInstance.get(`${MANAGER_URL}/${id}`)
+    override async getSnippetById(id: string): Promise<Snippet | undefined> {
+        const resp = await axiosInstance.get(`${MANAGER_URL}/${id}`)
+        return resp.data
     }
     override updateSnippetById(id: string, updateSnippet: UpdateSnippet): Promise<Snippet> {
         super.updateSnippetById(id, updateSnippet)

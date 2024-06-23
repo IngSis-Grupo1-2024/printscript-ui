@@ -4,10 +4,11 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {SnippetDetail} from "./SnippetDetail.tsx";
 import {Drawer} from "@mui/material";
-import {useGetSnippets} from "../utils/queries.tsx";
+import {useGetSnippets, useSaveUserName} from "../utils/queries.tsx";
 import {usePaginationContext} from "../contexts/paginationContext.tsx";
 import useDebounce from "../hooks/useDebounce.ts";
 import {useAuth0} from "@auth0/auth0-react";
+import {queryClient} from "../App.tsx";
 
 const HomeScreen = () => {
   const {id: paramsId} = useParams<{ id: string }>();
@@ -16,12 +17,19 @@ const HomeScreen = () => {
   const [snippetId, setSnippetId] = useState<string | null>(null)
   const {page, page_size, count, handleChangeCount} = usePaginationContext()
   const {data, isLoading} = useGetSnippets(page, page_size, snippetName)
+  const { user} = useAuth0();
+  const {mutateAsync: saveUserName} = useSaveUserName({
+    onSuccess: () => queryClient.invalidateQueries('listSnippets')
+  })
 
   useEffect(() => {
     if (data?.count && data.count != count) {
       handleChangeCount(data.count)
     }
-  }, [count, data?.count, handleChangeCount]);
+    if(user !== undefined) {
+      if(user.nickname !== undefined) saveUserName(user.nickname)
+    }
+  }, [count, data?.count, handleChangeCount, user]);
 
 
   useEffect(() => {

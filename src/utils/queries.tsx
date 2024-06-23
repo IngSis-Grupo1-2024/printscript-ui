@@ -119,10 +119,11 @@ export const useDeleteSnippet = ({onSuccess}: { onSuccess: () => void }) => {
     );
 }
 
-export const useSaveUserName = (name: string | undefined) => {
-    console.log(name)
-    if(name) snippetOperations.saveName(name)
-}
+export const useSaveUserName = ({onSuccess}: {
+    onSuccess: () => void
+}): UseMutationResult<string, Error, string> => {
+    return useMutation<string, Error, string>(name => snippetOperations.saveName(name), {onSuccess});
+};
 
 export const useGetFileTypes = () => {
     return useQuery<FileType[], Error>('fileTypes', () => snippetOperations.getFileTypes());
