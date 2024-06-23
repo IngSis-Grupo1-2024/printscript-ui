@@ -25,9 +25,8 @@ const pages: PageType[] = [{
 
 export const Navbar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const {isAuthenticated} = useAuth0();
-    const navigate = useNavigate()
-
 
     const onClick = (event: string) => {
         navigate(event)
