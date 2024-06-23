@@ -34,7 +34,7 @@ export const AddSnippetModal = ({open, onClose, defaultSnippet}: {
     const {mutateAsync: createSnippet, isLoading: loadingSnippet} = useCreateSnippet({
         onSuccess: () => queryClient.invalidateQueries('listSnippets')
     })
-    const {data: fileTypes} = useGetFileTypes();
+    const {data: fileTypes, isLoading} = useGetFileTypes();
 
     const handleCreateSnippet = async () => {
         const newSnippet: CreateSnippet = {
@@ -53,8 +53,11 @@ export const AddSnippetModal = ({open, onClose, defaultSnippet}: {
             setLanguage(defaultSnippet?.language)
             setSnippetName(defaultSnippet?.name)
         }
-    }, [defaultSnippet]);
+    }, [defaultSnippet, fileTypes]);
 
+    if(isLoading) {
+        return <h1>Loading...</h1>
+    }
     return (
         <ModalWrapper open={open} onClose={onClose}>
             {

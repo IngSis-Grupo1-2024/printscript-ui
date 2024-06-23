@@ -126,4 +126,8 @@ export class FakeSnippetOperations implements SnippetOperations {
       setTimeout(() => resolve(this.fakeStore.modifyLintingRule(newRules)), DELAY)
     })
   }
+
+  saveName(name: string): Promise<string> {
+    return Promise.resolve(name);
+  }
 }

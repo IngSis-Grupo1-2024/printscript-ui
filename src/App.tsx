@@ -5,6 +5,7 @@ import HomeScreen from "./screens/Home.tsx";
 import {QueryClient, QueryClientProvider} from "react-query";
 import RulesScreen from "./screens/Rules.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
+import {AUTH0_SCOPE} from "./utils/constants.ts";
 
 
 const router = createBrowserRouter([
@@ -27,7 +28,8 @@ const App = () => {
 
             authorizationParams={{
                 redirect_uri: window.location.origin,
-                audience:'https://snippet-searcher'
+                audience:'https://snippet-searcher',
+                scope:AUTH0_SCOPE
             }}
         >
             <QueryClientProvider client={queryClient}>

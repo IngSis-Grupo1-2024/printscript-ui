@@ -7,10 +7,10 @@ import {SnackbarProvider} from "./contexts/snackbarProvider.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-      <PaginationProvider>
-        <SnackbarProvider>
-          <App/>
-        </SnackbarProvider>
-      </PaginationProvider>
+        <PaginationProvider>
+            <SnackbarProvider>
+                <App/>
+            </SnackbarProvider>
+        </PaginationProvider>
     </React.StrictMode>,
 )

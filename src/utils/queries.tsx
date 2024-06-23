@@ -5,11 +5,11 @@ import {PaginatedUsers} from "./users.ts";
 import {TestCase} from "../types/TestCase.ts";
 import {FileType} from "../types/FileType.ts";
 import {Rule} from "../types/Rule.ts";
-import SnippetOperationsImpl from "./snippetOperationsImpl.ts";
+import {RemoteSnippetOperations} from "./services/RemoteSnippetOperations.ts";
 
 
 
-const snippetOperations: SnippetOperations = SnippetOperationsImpl;
+const snippetOperations: SnippetOperations = new RemoteSnippetOperations()
 
 export const useGetSnippets = (page: number = 0, pageSize: number = 10, snippetName?: string) => {
     return useQuery<PaginatedSnippets, Error>(['listSnippets', page, pageSize, snippetName], () => snippetOperations.listSnippetDescriptors(page, pageSize, snippetName));
@@ -119,6 +119,10 @@ export const useDeleteSnippet = ({onSuccess}: { onSuccess: () => void }) => {
     );
 }
 
+export const useSaveUserName = (name: string | undefined) => {
+    console.log(name)
+    if(name) snippetOperations.saveName(name)
+}
 
 export const useGetFileTypes = () => {
     return useQuery<FileType[], Error>('fileTypes', () => snippetOperations.getFileTypes());

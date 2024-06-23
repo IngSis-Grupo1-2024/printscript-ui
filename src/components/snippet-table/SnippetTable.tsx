@@ -14,7 +14,7 @@ import {
   TableRow
 } from "@mui/material";
 import {AddSnippetModal} from "./AddSnippetModal.tsx";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Add, Search} from "@mui/icons-material";
 import {LoadingSnippetRow, SnippetRow} from "./SnippetRow.tsx";
 import {CreateSnippetWithLang, getFileLanguage, Snippet} from "../../utils/snippet.ts";
@@ -39,7 +39,7 @@ export const SnippetTable = (props: SnippetTableProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const {page, page_size: pageSize, count, handleChangePageSize, handleGoToPage} = usePaginationContext()
   const {createSnackbar} = useSnackbarContext()
-  const {data: fileTypes} = useGetFileTypes();
+  const {data: fileTypes, isLoading} = useGetFileTypes();
 
   const handleLoadSnippet = async (target: EventTarget & HTMLInputElement) => {
     const files = target.files
@@ -73,6 +73,12 @@ export const SnippetTable = (props: SnippetTableProps) => {
     setPopoverMenuOpened(false)
   }
 
+  useEffect(() => {
+  }, [fileTypes]);
+
+  if(isLoading) {
+    return <h1>Loading...</h1>
+  }
   return (
       <>
         <Box display="flex" flexDirection="row" justifyContent="space-between">
