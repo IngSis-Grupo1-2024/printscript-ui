@@ -24,15 +24,17 @@ const App = () => {
         <Auth0Provider
             domain="dev-dxazwu1rijz501rx.us.auth0.com"
             clientId="wsLlRrSaLvb45jz9v2UBugf4ruUxvd08"
+
             authorizationParams={{
-                redirect_uri: window.location.origin
+                redirect_uri: window.location.origin,
+                audience:'https://snippet-searcher'
             }}
         >
             <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router}/>
             </QueryClientProvider>
         </Auth0Provider>
-);
+    );
 }
 
 export default App;
