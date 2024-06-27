@@ -21,6 +21,15 @@ export type ShareSnippet = {
   "userId": string
 }
 
+export type PostTestCase = {
+  "id": string,
+  "snippetId": string,
+  "name": string,
+  "input"?: string[],
+  "output"?: string[],
+  "envVars"?: string
+}
+
 export type UpdateRules = {
   "rules": Rule[]
 }
