@@ -130,4 +130,8 @@ export class FakeSnippetOperations implements SnippetOperations {
   saveName(name: string): Promise<string> {
     return Promise.resolve(name);
   }
+
+  getDefaultConfig(): Promise<string> {
+    return Promise.resolve("");
+  }
 }

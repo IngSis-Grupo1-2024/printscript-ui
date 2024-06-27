@@ -41,4 +41,6 @@ export interface SnippetOperations {
   modifyLintingRule(newRules: Rule[]): Promise<Rule[]>
 
   saveName(name: string): Promise<string>
+
+  getDefaultConfig(): Promise<string>
 }

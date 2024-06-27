@@ -124,6 +124,11 @@ export const useSaveUserName = ({onSuccess}: {
 }): UseMutationResult<string, Error, string> => {
     return useMutation<string, Error, string>(name => snippetOperations.saveName(name), {onSuccess});
 };
+export const useDefaultConfig = ({onSuccess}: {
+    onSuccess: () => void
+}): UseMutationResult<string, Error, void> => {
+    return useMutation<string, Error, void>(()=>snippetOperations.getDefaultConfig(), {onSuccess});
+};
 
 export const useGetFileTypes = () => {
     return useQuery<FileType[], Error>('fileTypes', () => snippetOperations.getFileTypes());

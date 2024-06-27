@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {SnippetDetail} from "./SnippetDetail.tsx";
 import {Drawer} from "@mui/material";
-import {useGetSnippets, useSaveUserName} from "../utils/queries.tsx";
+import {useDefaultConfig, useGetSnippets, useSaveUserName} from "../utils/queries.tsx";
 import {usePaginationContext} from "../contexts/paginationContext.tsx";
 import useDebounce from "../hooks/useDebounce.ts";
 import {useAuth0} from "@auth0/auth0-react";
@@ -21,7 +21,9 @@ const HomeScreen = () => {
   const {mutateAsync: saveUserName} = useSaveUserName({
     onSuccess: () => queryClient.invalidateQueries('listSnippets')
   })
-
+  const {mutateAsync: defaultConfig} = useDefaultConfig({
+    onSuccess: () => queryClient.invalidateQueries('listSnippets')
+  })
   useEffect(() => {
     if (data?.count && data.count != count) {
       handleChangeCount(data.count)
@@ -29,6 +31,7 @@ const HomeScreen = () => {
     if(user !== undefined) {
       if(user.nickname !== undefined) saveUserName(user.nickname)
     }
+    defaultConfig()
   }, [count, data?.count, handleChangeCount, user]);
 
 

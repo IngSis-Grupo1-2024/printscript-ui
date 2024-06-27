@@ -1,5 +1,6 @@
 import {Pagination} from "./pagination.ts";
 import {FileType} from "../types/FileType.ts";
+import {Rule} from "../types/Rule.ts";
 
 export type ComplianceEnum =
     'pending' |
@@ -13,6 +14,15 @@ export type CreateSnippet = {
   content: string;
   language: string;
   extension: string;
+}
+
+export type ShareSnippet = {
+  "snippetId": string,
+  "userId": string
+}
+
+export type UpdateRules = {
+  "rules": Rule[]
 }
 
 export type CreateSnippetWithLang = CreateSnippet & { language: string }

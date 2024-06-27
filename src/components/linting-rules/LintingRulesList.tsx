@@ -70,7 +70,7 @@ const LintingRulesList = () => {
                 disableRipple
                 onChange={toggleRule(rule)}
               />
-              <ListItemText primary={rule.name} />
+              <ListItemText primary={rule.name.toLowerCase()} />
               {typeof rule.value === 'number' ?
                 (<TextField
                   type="number"
