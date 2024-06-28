@@ -104,9 +104,9 @@ export const useModifyLintingRules = ({onSuccess}: { onSuccess: () => void }) =>
     );
 }
 
-export const useFormatSnippet = () => {
+export const useFormatSnippet = (snippetId: string) => {
     return useMutation<string, Error, string>(
-        snippetContent => snippetOperations.formatSnippet(snippetContent)
+        snippetContent => snippetOperations.formatSnippet(snippetId, snippetContent)
     );
 }
 
