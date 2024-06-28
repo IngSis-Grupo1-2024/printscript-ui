@@ -1,7 +1,15 @@
 import {FileType} from "../../types/FileType.ts";
 import axiosInstance from "./axiosRequest.ts";
 import {CONFIGURATION_URL, MANAGER_URL} from "../constants.ts";
-import {CreateSnippet, PaginatedSnippets, Snippet, UpdateSnippet, ShareSnippet, UpdateRules} from "../snippet.ts";
+import {
+    CreateSnippet,
+    PaginatedSnippets,
+    Snippet,
+    UpdateSnippet,
+    ShareSnippet,
+    UpdateRules,
+    PostTestCase
+} from "../snippet.ts";
 import {PaginatedUsers, User} from "../users.ts";
 import {SnippetOperations} from "../snippetOperations.ts";
 import {Rule} from "../../types/Rule.ts";
@@ -33,7 +41,8 @@ export class RemoteSnippetOperations implements SnippetOperations {
         const resp = await axiosInstance.get(`${MANAGER_URL}/${id}`)
         return resp.data
     }
-     updateSnippetById(id: string, updateSnippet: UpdateSnippet): Promise<Snippet> {
+
+    updateSnippetById(id: string, updateSnippet: UpdateSnippet): Promise<Snippet> {
         return axiosInstance.put(`${MANAGER_URL}/${id}`, updateSnippet)
     }
 
@@ -94,9 +103,9 @@ export class RemoteSnippetOperations implements SnippetOperations {
         // return fakeOpp.getLintingRules()
     }
 
-    // getTestCases(snippetId: string): Promise<TestCase[]> {
-    getTestCases(): Promise<TestCase[]> {
-        return fakeOpp.getTestCases();
+    async getTestCases(snippetId: string): Promise<TestCase[]> {
+        const types = await axiosInstance.get(`${CONFIGURATION_URL}/test_case/${snippetId}`)
+        return types.data.testCases
     }
 
     async modifyFormatRule(newRules: Rule[]): Promise<Rule[]> {
@@ -116,12 +125,25 @@ export class RemoteSnippetOperations implements SnippetOperations {
     }
 
     // postTestCase(testCase: Partial<TestCase>): Promise<TestCase> {
-    postTestCase(testCase: TestCase): Promise<TestCase> {
-        return fakeOpp.postTestCase(testCase);
+    async postTestCase(snippetId: string, testCase: TestCase): Promise<TestCase> {
+        if(testCase.id === undefined) testCase.id = "0"
+        const postTestCase: PostTestCase = {
+            id: testCase.id,
+            snippetId: snippetId,
+            name: testCase.name,
+            input: testCase.input,
+            output: testCase.output,
+            envVars: testCase.envVars
+        }
+        console.log(`test case post id -> ${postTestCase.id}`)
+        console.log(`test case post -> ${postTestCase}`)
+        const types = await axiosInstance.post(`${MANAGER_URL}/test_case`, postTestCase)
+        return types.data
     }
 
-    removeTestCase(id: string): Promise<string> {
-        return fakeOpp.removeTestCase(id);
+    async removeTestCase(id: string): Promise<string> {
+        const types = await axiosInstance.delete(`${MANAGER_URL}/test_case/${id}`)
+        return types.data
     }
 
     // testSnippet(testCase: Partial<TestCase>): Promise<TestCaseResult>
