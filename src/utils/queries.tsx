@@ -8,7 +8,6 @@ import {Rule} from "../types/Rule.ts";
 import {RemoteSnippetOperations} from "./services/RemoteSnippetOperations.ts";
 
 
-
 const snippetOperations: SnippetOperations = new RemoteSnippetOperations()
 
 export const useGetSnippets = (page: number = 0, pageSize: number = 10, snippetName?: string) => {

@@ -31,7 +31,8 @@ export type PostTestCase = {
 }
 
 export type UpdateRules = {
-  "rules": Rule[]
+  "rules": Rule[],
+  "type": string
 }
 
 export type CreateSnippetWithLang = CreateSnippet & { language: string }

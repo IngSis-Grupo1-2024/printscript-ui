@@ -92,14 +92,13 @@ export class RemoteSnippetOperations implements SnippetOperations {
     }
 
     async getFormatRules(): Promise<Rule[]> {
-        const resp = await axiosInstance.get(`${CONFIGURATION_URL}/configuration/rules?ruleType=FORMATTING`)
+        const resp = await axiosInstance.get(`${MANAGER_URL}/rules/formatting`)
         return resp.data.rules
     }
 
     async getLintingRules(): Promise<Rule[]> {
-        const resp = await axiosInstance.get(`${CONFIGURATION_URL}/configuration/rules?ruleType=LINTING`)
+        const resp = await axiosInstance.get(`${MANAGER_URL}/rules/linting`)
         return resp.data.rules
-        // return fakeOpp.getLintingRules()
     }
 
     async getTestCases(snippetId: string): Promise<TestCase[]> {
@@ -109,21 +108,22 @@ export class RemoteSnippetOperations implements SnippetOperations {
 
     async modifyFormatRule(newRules: Rule[]): Promise<Rule[]> {
         const updateRules: UpdateRules = {
-            rules: newRules
+            rules: newRules,
+            type: "FORMATTING"
         }
-        const types = await axiosInstance.post(`${CONFIGURATION_URL}/configuration/update_rules`, updateRules)
+        const types = await axiosInstance.put(`${MANAGER_URL}/rules`, updateRules)
         return types.data
     }
 
     async modifyLintingRule(newRules: Rule[]): Promise<Rule[]> {
         const updateRules: UpdateRules = {
-            rules: newRules
+            rules: newRules,
+            type: "LINTING"
         }
-        const types = await axiosInstance.post(`${CONFIGURATION_URL}/configuration/update_rules`, updateRules)
+        const types = await axiosInstance.put(`${MANAGER_URL}/rules`, updateRules)
         return types.data
     }
 
-    // postTestCase(testCase: Partial<TestCase>): Promise<TestCase> {
     async postTestCase(snippetId: string, testCase: TestCase): Promise<TestCase> {
         if(testCase.id === undefined) testCase.id = "0"
         const postTestCase: PostTestCase = {
