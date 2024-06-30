@@ -1,11 +1,18 @@
-import {useAuth0} from "@auth0/auth0-react";
-
 export const LogOutButton = () => {
-    const {logout} = useAuth0();
+    const logout = () => {
+        localStorage.clear();
+        // Clear all cookies
+        document.cookie.split(";").forEach((c) => {
+            document.cookie = c
+                .replace(/^ +/, "")
+                .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+        window.location.reload();
+    };
+
     return <button
-        onClick={() =>
-            logout({logoutParams: {returnTo: window.location.origin}})}
-        >
+        onClick={() => logout()}
+    >
         Log Out
     </button>
 }

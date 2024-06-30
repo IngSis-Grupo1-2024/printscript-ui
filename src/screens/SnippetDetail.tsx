@@ -80,6 +80,8 @@ export const SnippetDetail = (props: SnippetDetailProps) => {
 
   async function handleShareSnippet(userId: string) {
     shareSnippet({snippetId: id, userId})
+    setShareModalOppened(false)
+    alert("Snippet shared successfully")
   }
 
   return (
