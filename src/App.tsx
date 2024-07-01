@@ -5,7 +5,12 @@ import HomeScreen from "./screens/Home.tsx";
 import {QueryClient, QueryClientProvider} from "react-query";
 import RulesScreen from "./screens/Rules.tsx";
 import {Auth0Provider} from "@auth0/auth0-react";
-import {AUTH0_SCOPE} from "./utils/constants.ts";
+import {AUTH0_SCOPE, AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_AUDIENCE} from "./utils/constants.ts";
+
+console.log(AUTH0_SCOPE)
+console.log(AUTH0_DOMAIN)
+console.log(AUTH0_CLIENT_ID)
+console.log(AUTH0_AUDIENCE)
 
 
 const router = createBrowserRouter([
@@ -23,12 +28,12 @@ export const queryClient = new QueryClient()
 const App = () => {
     return (
         <Auth0Provider
-            domain="dev-dxazwu1rijz501rx.us.auth0.com"
-            clientId="wsLlRrSaLvb45jz9v2UBugf4ruUxvd08"
+            domain={AUTH0_DOMAIN}
+            clientId={AUTH0_CLIENT_ID}
 
             authorizationParams={{
                 redirect_uri: window.location.origin,
-                audience:'https://snippet-searcher',
+                audience:AUTH0_AUDIENCE,
                 scope:AUTH0_SCOPE
             }}
         >
