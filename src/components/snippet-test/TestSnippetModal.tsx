@@ -5,6 +5,7 @@ import {AddRounded} from "@mui/icons-material";
 import {useGetTestCases, usePostTestCase, useRemoveTestCase} from "../../utils/queries.tsx";
 import {TabPanel} from "./TabPanel.tsx";
 import {queryClient} from "../../App.tsx";
+import CloseIcon from "@mui/icons-material/Close";
 
 type TestSnippetModalProps = {
     open: boolean
@@ -27,6 +28,9 @@ export const TestSnippetModal = ({open, onClose, snippetId}: TestSnippetModalPro
 
     return (
         <ModalWrapper open={open} onClose={onClose}>
+            <div onClick={onClose} style={{display: "flex", justifyContent: "end"}}>
+                <CloseIcon/>
+            </div>
             <Typography variant={"h5"}>Test snippet</Typography>
             <Divider/>
             <Box mt={2} display="flex">
