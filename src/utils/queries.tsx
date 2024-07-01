@@ -6,6 +6,7 @@ import {TestCase} from "../types/TestCase.ts";
 import {FileType} from "../types/FileType.ts";
 import {Rule} from "../types/Rule.ts";
 import {RemoteSnippetOperations} from "./services/RemoteSnippetOperations.ts";
+import {AxiosError} from "axios";
 
 
 const snippetOperations: SnippetOperations = new RemoteSnippetOperations()
@@ -104,8 +105,9 @@ export const useModifyLintingRules = ({onSuccess}: { onSuccess: () => void }) =>
 }
 
 export const useFormatSnippet = (snippetId: string) => {
-    return useMutation<string, Error, string>(
-        snippetContent => snippetOperations.formatSnippet(snippetId, snippetContent)
+    return useMutation<string, AxiosError, string>(
+        () => snippetOperations.formatSnippet(snippetId),
+        {onError: (error: AxiosError) => {alert(error.response?.data)}}
     );
 }
 

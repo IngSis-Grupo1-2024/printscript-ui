@@ -87,8 +87,8 @@ export class RemoteSnippetOperations implements SnippetOperations {
         return types.data
     }
 
-    async formatSnippet(snippetId: string, snippetContent: string): Promise<string> {
-        const response = await axiosInstance.post(`${MANAGER_URL}/run/format`, {id: snippetId, content: snippetContent})
+    async formatSnippet(snippetId: string): Promise<string> {
+        const response = await axiosInstance.post(`${MANAGER_URL}/run/format/${snippetId}`)
         return response.data.message
     }
 
