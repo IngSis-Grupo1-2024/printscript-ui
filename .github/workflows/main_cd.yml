@@ -5,8 +5,17 @@ on:
       - master
 jobs:
   push_to_registry:
-    uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/cd.yml@main
-    with:
-      image-name: printscript-ui
-      env-name: main
-      additional-build-args: FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+    name: Push to Registry
+    runs-on: ubuntu-latest
+    env:
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Push to registry
+        uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/cd.yml@main
+        with:
+          image-name: printscript-ui
+          env-name: main
+          additional-build-args: FRONTEND_URL=${{ env.FRONTEND_URL }}
