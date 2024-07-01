@@ -4,11 +4,12 @@ on:
     branches:
       - master
 jobs:
-  push_to_registry:
-    uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/cd.yml@main
-    with:
-      image-name: printscript-ui
-      env-name: main
-      additional-build-args: FRONTEND_URL=${{ secrets.FRONTEND_URL }}
-    secrets:
-      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    environment: deployment
+    steps: 
+    - uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/cd.yml@main
+      with:
+        image-name: printscript-ui
+        env-name: main
+        additional-build-args: FRONTEND_URL=${{ secrets.FRONTEND_URL }}
