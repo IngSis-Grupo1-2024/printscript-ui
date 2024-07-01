@@ -6,9 +6,9 @@ on:
 jobs:
   push_to_registry:
     uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/cd.yml@main
-    secrets:
-      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
     with:
       image-name: printscript-ui
       env-name: main
       additional-build-args: FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+    secrets:
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
