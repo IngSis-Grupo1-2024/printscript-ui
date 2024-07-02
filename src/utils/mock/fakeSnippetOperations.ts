@@ -135,4 +135,8 @@ export class FakeSnippetOperations implements SnippetOperations {
   getDefaultConfig(): Promise<string> {
     return Promise.resolve("");
   }
+
+  runSnippet(): Promise<string> {
+    return Promise.resolve("");
+  }
 }
