@@ -26,7 +26,9 @@ export interface SnippetOperations {
 
   formatSnippet(snippetId: string): Promise<string>
 
-  postTestCase(snippetId: string, testCase: Partial<TestCase>): Promise<TestCase>
+    runSnippet(snippetId: string): Promise<string>
+
+    postTestCase(snippetId: string, testCase: Partial<TestCase>): Promise<TestCase>
 
   removeTestCase(id: string): Promise<string>
 

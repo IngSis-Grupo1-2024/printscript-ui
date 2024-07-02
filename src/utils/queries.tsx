@@ -111,6 +111,12 @@ export const useFormatSnippet = (snippetId: string) => {
     );
 }
 
+export const useRunSnippet = (snippetId: string) => {
+    return useMutation<string, AxiosError, string>(
+        () => snippetOperations.runSnippet(snippetId),
+        );
+}
+
 export const useDeleteSnippet = ({onSuccess}: { onSuccess: () => void }) => {
     return useMutation<string, Error, string>(
         id => snippetOperations.deleteSnippet(id),

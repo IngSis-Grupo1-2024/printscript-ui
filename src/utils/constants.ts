@@ -10,4 +10,3 @@ export const AUTH0_SCOPE = import.meta.env?.VITE_AUTH0_SCOPE ?? "openid profile 
 
 export const MANAGER_URL = import.meta.env?.VITE_MANAGER_URL ?? "http://localhost:8081"
 export const CONFIGURATION_URL = import.meta.env?.VITE_CONFIGURATION_URL ?? "http://localhost:8082"
-
