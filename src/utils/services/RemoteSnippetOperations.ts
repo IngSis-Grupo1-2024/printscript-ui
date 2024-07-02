@@ -15,9 +15,7 @@ import {SnippetOperations} from "../snippetOperations.ts";
 import {Rule} from "../../types/Rule.ts";
 import {TestCase} from "../../types/TestCase.ts";
 import {TestCaseResult} from "../queries.tsx";
-import {FakeSnippetOperations} from "../mock/fakeSnippetOperations.ts";
 
-const fakeOpp = new FakeSnippetOperations()
 export class RemoteSnippetOperations implements SnippetOperations {
     async getFileTypes(): Promise<FileType[]> {
         const types = await axiosInstance.get(`${MANAGER_URL}/fileType`)
@@ -30,7 +28,7 @@ export class RemoteSnippetOperations implements SnippetOperations {
     }
 
      createSnippet(createSnippet: CreateSnippet): Promise<Snippet> {
-        return axiosInstance.post(`${MANAGER_URL}`, createSnippet)
+        return axiosInstance.post(`${MANAGER_URL}/`, createSnippet)
     }
 
      deleteSnippet(id: string): Promise<string> {
@@ -76,7 +74,6 @@ export class RemoteSnippetOperations implements SnippetOperations {
         return types.data
     }
 
-    // postTestCase(testCase: Partial<TestCase>): Promise<TestCase>
 
     async shareSnippet(snippetId: string, userId: string): Promise<Snippet> {
         const shareSnippet: ShareSnippet = {
@@ -135,7 +132,7 @@ export class RemoteSnippetOperations implements SnippetOperations {
     }
 
     async postTestCase(snippetId: string, testCase: TestCase): Promise<TestCase> {
-        if(testCase.id === undefined) testCase.id = "0"
+        testCase = this.getTestCase(testCase)
         const postTestCase: PostTestCase = {
             id: testCase.id,
             snippetId: snippetId,
@@ -144,8 +141,6 @@ export class RemoteSnippetOperations implements SnippetOperations {
             output: testCase.output,
             envVars: testCase.envVars
         }
-        console.log(`test case post id -> ${postTestCase.id}`)
-        console.log(`test case post -> ${postTestCase}`)
         const types = await axiosInstance.post(`${MANAGER_URL}/test_case`, postTestCase)
         return types.data
     }
@@ -155,9 +150,25 @@ export class RemoteSnippetOperations implements SnippetOperations {
         return types.data
     }
 
-    // testSnippet(testCase: Partial<TestCase>): Promise<TestCaseResult>
-    testSnippet(): Promise<TestCaseResult> {
-        return fakeOpp.testSnippet();
+    async testSnippet(snippetId:string, testCase: TestCase): Promise<TestCaseResult> {
+        testCase = this.getTestCase(testCase)
+        const postTestCase: PostTestCase = {
+            id: testCase.id,
+            snippetId: snippetId,
+            name: testCase.name,
+            input: testCase.input,
+            output: testCase.output,
+            envVars: testCase.envVars
+        }
+        const types = await axiosInstance.put(`${MANAGER_URL}/test_case/${snippetId}`, postTestCase)
+        return types.data
     }
 
+    private getTestCase(testCase: TestCase): TestCase{
+        if(testCase.id === undefined) testCase.id = "0"
+        if(testCase.input === undefined) testCase.input = []
+        if(testCase.output === undefined) testCase.output = []
+        if(testCase.envVars === undefined) testCase.envVars = ""
+        return testCase
+    }
 }
