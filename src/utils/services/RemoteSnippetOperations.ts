@@ -95,7 +95,6 @@ export class RemoteSnippetOperations implements SnippetOperations {
     async runSnippet(snippetId: string): Promise<string> {
         const response = await axiosInstance.post(`${MANAGER_URL}/run/execute/${snippetId}`).catch(
             (error) => {
-                console.log(error)
                 return error.response
             }
         )
