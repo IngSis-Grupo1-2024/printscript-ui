@@ -46,3 +46,10 @@ jobs:
             VITE_AUTH0_SCOPE=${{ secrets.AUTH0_SCOPE }}
             VITE_MANAGER_URL=${{ secrets.MANAGER_URL }}
             VITE_CONFIGURATIONS_URL=${{ secrets.CONFIGURATIONS_URL }}
+
+  deploy_to_vm:
+    uses: IngSis-Grupo1-2024/snippet-infra/.github/workflows/deploy.yml@main
+    needs: push_to_registry
+    secrets: inherit 
+    with:
+      container-name: printscript-ui
